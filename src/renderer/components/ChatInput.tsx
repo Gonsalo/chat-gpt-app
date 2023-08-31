@@ -103,20 +103,6 @@ function ChatInput() {
       : undefined;
   };
 
-  const updateMessageWithCompletion = (
-    completion: ChatCompletion | undefined,
-    message: MessageModel
-  ) => {
-    if (completion) {
-      message.oid = completion.id;
-      message.usage = completion.usage!;
-      message.content = getCompletionContent(completion)!;
-      dispatch(updateMessage(message));
-    }
-
-    return completion;
-  };
-
   const generateResponseCompletion = async (
     chat: ChatModel,
     stream: boolean,
@@ -135,7 +121,12 @@ function ChatInput() {
       completion = await generateResponse(msg);
     }
 
-    updateMessageWithCompletion(completion, assistantMessage);
+    if (completion) {
+      assistantMessage.oid = completion.id;
+      assistantMessage.usage = completion.usage!;
+      assistantMessage.content = getCompletionContent(completion)!;
+      dispatch(updateMessage(assistantMessage));
+    }
 
     return completion;
   };

@@ -18,11 +18,6 @@ export const getMessageFeedItems = createAsyncThunk(
   async (chatId: string) => messagesApi.find(chatId, { chatId })
 );
 
-// export const insertMessage = createAsyncThunk(
-//   'message/insertMessage',
-//   async (chatId: string) => messagesApi.find(chatId, { chatId })
-// );
-
 const messageSlice = createSlice({
   name: 'message',
   initialState,
