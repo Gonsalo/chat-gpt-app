@@ -180,16 +180,11 @@ function ChatInput() {
         }
       }
 
-      dispatch(saveMessageFeed(chat._id));
-      dispatch(
-        updateChat({
-          ...chat,
-          usage: getUsageTotalFromCompletions(selectedModel, ...completions),
-        })
-      );
-    } catch (error) {
-      console.log(userMessage, userInput);
+      chat.usage = getUsageTotalFromCompletions(selectedModel, ...completions);
 
+      dispatch(saveMessageFeed(chat._id));
+      dispatch(updateChat(chat));
+    } catch (error) {
       dispatch(setInputValue(userInput));
       dispatch(removeMessage(userMessage._id));
     }

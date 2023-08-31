@@ -40,7 +40,11 @@ const chatSlice = createSlice({
         ...payload,
         updatedAt: Date.now(),
       });
+
       if (updatedChat) {
+        if (state.selectedChat?._id === updatedChat._id) {
+          state.selectedChat = updatedChat;
+        }
         chatsApi.update(current(updatedChat));
       }
     },
